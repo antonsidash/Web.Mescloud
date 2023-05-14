@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+<style>
+body {
+  margin:0;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  min-height:min-content;
+  min-width: min-content;
+  background-image:url("https://png.pngtree.com/thumb_back/fw800/background/20190831/pngtree-blue-sky-and-cloud-abstract-background-vector-illustration-eps-10-image_313544.jpg");
+}
+.container {
+  display:block;
+  width: 40%;
+  border: 2px solid #83d4f4;
+  border-radius: 5px;
+  padding: 1%;
+  padding-bottom:1%;
+  margin:auto;
+}
+.text{
+    display:flex;
+    justify-content:left;
+    font-size:32px;
+    font-style:italic;
+    color:rgb(0, 65, 105);
+    margin:1%;
+    margin-left:3%;
+    margin-top:3%;
+}
+</style>
+</head>
+<body>
+
+<h2 class="text">{{room}} - MesCloud</h2>
+
+<div id="display">
+
+<!-- <div class="container darker">
+  <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
+  <span class="time-left">20th, April 2021</span>
+</div> -->
+
+</div>
+
+<script>
+$(document).ready(function(){
+
+setInterval(function(){
+    $.ajax({
+        type: 'GET',
+        url : "/getMessages/{{room}}/",
+        success: function(response){
+            console.log(response);
+            $("#display").empty();
+            for (var key in response.messages)
+            {
+                var temp="<div class='container darker'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].value+"</p><span class='time-left'>"+response.messages[key].date+"</span></div>";
+                $("#display").append(temp);
+            }
+        },
+        error: function(response){
+            alert('An error occured')
+        }
+    });
+},1000);
+})
+</script>
+
+
+<div class="container">
+    <style>
+    input[type=text], select {
+    width: 70%;
+    padding: 2%;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+
+    input[type=submit] {
+    width: 70%;
+    background-color: #87d4f3;
+    color: white;
+    padding: 2%;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: #c6e5f1;
+    }
+
+
+
+    </style>
+
+    <div class = "text">
+      <form id="post-form">
+        {% csrf_token %}
+        <input type="hidden" name="username" id="username" value="{{username}}"/>
+        <input type="hidden" name="room_id" id="room_id" value="{{room_details.id}}"/>
+        <input type="text" name="message" id="message" width="100px" />
+        <input type="submit" value="Send">
+        </form>
+    </div>
+    
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+  $(document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url:'/send',
+      data:{
+          username:$('#username').val(),
+          room_id:$('#room_id').val(),
+          message:$('#message').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        //alert(data)
+      }
+    });
+    document.getElementById('message').value = ''
+  });
+</script>
+
+</html>

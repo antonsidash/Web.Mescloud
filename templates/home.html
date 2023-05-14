@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css" type="text/css"/>
+<style>
+.body {
+    background-image: auto;
+    margin:0;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    min-height:min-content;
+    min-width: min-content;
+    background-image:url("https://png.pngtree.com/thumb_back/fw800/background/20190831/pngtree-blue-sky-and-cloud-abstract-background-vector-illustration-eps-10-image_313544.jpg");
+}
+.container {
+    display:block;
+    width: 55%;
+    border: 2px solid #83d4f4;
+    border-radius: 5px;
+    padding: 1%;
+    margin:auto;
+}
+  
+.darker {
+    border-color: rgb(169, 219, 255);
+    background-color: rgb(157, 190, 248);
+}
+  
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+  
+.container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+  
+.container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}
+  
+.time-right {
+    float: right;
+    color: rgb(170, 170, 170);
+}
+  
+.time-left {
+    float: left;
+    color: #999;
+}
+img{
+    width:auto;
+    height:auto;
+}
+.text{
+    display:flex;
+    justify-content:left;
+    font-size:24px;
+    font-style:italic;
+    color:rgb(0, 65, 105);
+    margin:1%;
+    margin-left:3%;
+    margin-top:3%;
+}
+.description{
+    display:flex;
+    justify-content:center;
+    font-size:27px;
+    font-style:italic;
+    color:rgb(0, 65, 105);
+    margin-right:2%; 
+    margin-top:3,5%;   
+}
+.advertising{
+    display:flex;
+    justify-content:right;
+    font-size:18px;
+    font-style:italic;
+    color:rgb(0, 65, 105);
+    margin-right:2%; 
+}
+.texting{
+    font-size:20px;
+    font-style:italic;
+    color:rgb(0, 65, 105);
+}
+.tex{
+    display:flex;
+    justify-content:center;
+    font-size:25px;
+    font-style:italic;
+    color:rgb(0, 65, 105);
+    margin:0;
+    padding:0;
+}
+</style>
+</head>
+<body class = "body">
+<header>
+  <div class = "text">Mescloud</div>
+ <div>
+   <p class = "description">Новый чат-мессенджер для тебя и твоих друзей</p>
+ </div>
+ <div >
+  <p class = "advertising">"Создавайте свои комнаты,</p>
+  <p class = "advertising">придумывайте оригинальные ники</p>
+  <p class = "advertising">и общайтесь в режиме реального времени."</p>
+ </div>
+</header>
+
+
+
+
+
+<div class="container">
+    <style>
+        input[type=text], select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid rgb(194, 222, 252);
+        border-radius: 4px;
+        box-sizing: border-box;
+        }
+        input[type=password], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid rgb(194, 222, 252);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 30%;
+            background-color: #83d4f4;
+            color: white;
+            padding: 14px 20px;
+            margin-left:35%;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #083e6e;
+        }
+
+        div {
+            margin:0;
+        }
+    </style>
+
+    <form id="post-form" method="POST" action="checkview">
+        {% csrf_token %}
+        <p class = "tex">Вход в облака</p>
+        <label class = "texting">Название комнаты:</label>
+        <input type="text" name="room_name" id="room_name" width="100px" />
+        <label class = "texting">Никнейм:</label>
+        <input type="text" name="username" id="username" width="100px" />
+        <label for="userPassword" class = "texting">Пароль:</label>
+        <input id="userPassword" name="password" type="password">
+        <input type="submit" value="Войти">
+        <input type="text" value="{{ pass_error }}">
+    </form>
+</div>
+
+
+</body>
+
+
+</html>
